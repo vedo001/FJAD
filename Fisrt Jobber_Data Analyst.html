@@ -1,0 +1,593 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="First Jobber: Data Analyst — Browser Playtest" />
+  <title>First Jobber: Data Analyst | Playtest</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600;700&family=Noto+Sans+Thai:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+:root{
+  --bg:#0b1020;
+  --bg2:#121933;
+  --panel:#11182b;
+  --panel-2:#182036;
+  --panel-3:rgba(18,25,51,.72);
+  --paper:#f9fbff;
+  --ink:#eef4ff;
+  --text:#d7e0ef;
+  --muted:#92a0bc;
+  --line:rgba(255,255,255,.09);
+  --green:#8cff6d;
+  --green-2:#40e9c0;
+  --blue:#5aa7ff;
+  --violet:#7b79ff;
+  --danger:#ff7a90;
+  --shadow:0 24px 80px rgba(0,0,0,.38);
+  --mono:'IBM Plex Mono',monospace;
+  --sans:'Noto Sans Thai',sans-serif;
+}
+
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  margin:0;
+  font-family:var(--sans);
+  color:var(--text);
+  line-height:1.6;
+  background:
+    radial-gradient(circle at top left, rgba(90,167,255,.16), transparent 30%),
+    radial-gradient(circle at top right, rgba(123,121,255,.16), transparent 26%),
+    linear-gradient(180deg,#0a0f1d 0%,#10162a 46%,#0b1020 100%);
+  overflow-x:hidden;
+}
+
+.noise{
+  position:fixed;inset:0;pointer-events:none;opacity:.045;z-index:99;
+  background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 180 180' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.55'/%3E%3C/svg%3E")
+}
+
+.bg-orb{position:fixed;border-radius:50%;filter:blur(60px);pointer-events:none;z-index:0;opacity:.45}
+.orb-1{width:340px;height:340px;background:rgba(64,233,192,.13);top:-60px;left:-90px}
+.orb-2{width:420px;height:420px;background:rgba(123,121,255,.14);right:-120px;top:200px}
+
+.shell{width:min(1180px,calc(100% - 40px));margin:auto;position:relative;z-index:1}
+
+.nav-wrap{position:sticky;top:0;z-index:30;backdrop-filter:blur(18px);background:rgba(10,15,29,.54);border-bottom:1px solid rgba(255,255,255,.06)}
+.nav{min-height:82px;display:flex;align-items:center;justify-content:space-between}
+.brand{display:flex;align-items:center;gap:12px;color:inherit;text-decoration:none}
+.brand-mark{
+  display:grid;place-items:center;width:42px;height:42px;border-radius:14px;
+  background:linear-gradient(135deg,var(--green),var(--green-2));
+  color:#081017;font:800 15px var(--mono);box-shadow:0 10px 22px rgba(140,255,109,.26)
+}
+.brand strong,.brand small{display:block}
+.brand strong{font:700 13px var(--mono);letter-spacing:.08em;color:#f7fbff}
+.brand small{font:600 9px var(--mono);letter-spacing:.22em;color:var(--muted)}
+.nav nav{display:flex;align-items:center;gap:24px}
+.nav nav a{color:#e6edf9;text-decoration:none;font-size:14px;font-weight:600;opacity:.88}
+.nav nav a:hover{opacity:1}
+.build-pill{
+  padding:9px 13px;border:1px solid rgba(255,255,255,.08);border-radius:999px;
+  background:rgba(140,255,109,.12);color:var(--green);font:700 10px var(--mono);letter-spacing:.08em
+}
+
+.hero{padding:74px 0 72px;display:grid;grid-template-columns:.95fr 1.05fr;gap:58px;align-items:center}
+.eyebrow,.section-label{font:700 11px var(--mono);letter-spacing:.14em}
+.soft-pill{display:inline-flex;align-items:center;gap:10px;padding:10px 14px;border-radius:999px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.07);color:#dfe7f6}
+.live-dot{display:inline-block;width:8px;height:8px;border-radius:50%;background:var(--green);box-shadow:0 0 0 8px rgba(140,255,109,.08)}
+.hero h1{font-size:clamp(50px,6vw,82px);line-height:.98;letter-spacing:-.05em;margin:18px 0 20px;color:#fff}
+.hero h1 span{display:block;color:#8cbcff}
+.lead{font-size:17px;color:#bcc9df;max-width:620px;margin:0 0 28px}
+.hero-actions{display:flex;gap:14px;flex-wrap:wrap;margin-bottom:24px}
+.btn{
+  min-height:56px;padding:0 24px;border-radius:18px;border:1px solid rgba(255,255,255,.08);display:inline-flex;
+  align-items:center;justify-content:center;gap:10px;text-decoration:none;color:inherit;font:700 15px var(--sans);transition:.22s ease;
+}
+.btn:hover{transform:translateY(-2px)}
+.btn-primary{
+  background:linear-gradient(135deg,var(--green),var(--green-2));
+  color:#081117;box-shadow:0 14px 36px rgba(64,233,192,.28)
+}
+.btn-primary:hover{box-shadow:0 18px 40px rgba(64,233,192,.33)}
+.btn-secondary{background:rgba(255,255,255,.04)}
+.btn-light{background:var(--paper);color:#10182d;box-shadow:0 16px 34px rgba(0,0,0,.22)}
+.btn-dark{background:#11192f;color:#eff5ff;border-color:rgba(255,255,255,.1)}
+
+.glass-row{
+  display:flex;gap:14px;flex-wrap:wrap;padding:18px;border:1px solid rgba(255,255,255,.08);
+  background:rgba(255,255,255,.045);backdrop-filter:blur(10px);border-radius:22px
+}
+.meta-row{font:11px var(--mono);color:var(--muted);margin-bottom:22px}
+.meta-row b{color:#fff;margin-right:7px}.meta-row i{font-style:normal;color:var(--green)}
+
+.hero-mini-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:14px}
+.mini-card{
+  padding:20px;border:1px solid rgba(255,255,255,.08);border-radius:22px;background:rgba(255,255,255,.04);
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.04)
+}
+.mini-card small{display:block;font:700 10px var(--mono);letter-spacing:.12em;color:#8ec1ff;margin-bottom:8px}
+.mini-card strong{display:block;font-size:20px;color:#fff;margin-bottom:6px}
+.mini-card p{margin:0;color:var(--muted);font-size:14px}
+
+.hero-visual{position:relative;min-height:620px}
+.showcase-card{
+  background:linear-gradient(180deg,rgba(17,24,43,.95),rgba(11,16,32,.98));
+  border:1px solid rgba(255,255,255,.09);border-radius:30px;box-shadow:var(--shadow);overflow:hidden
+}
+.primary-panel{position:relative;z-index:2}
+.window-bar{height:48px;border-bottom:1px solid rgba(255,255,255,.08);display:flex;align-items:center;padding:0 16px;gap:7px;background:rgba(255,255,255,.02)}
+.window-bar span{width:10px;height:10px;border-radius:50%;background:#44526d}
+.window-bar span:first-child{background:#ff6b73}.window-bar span:nth-child(2){background:#ffb34d}.window-bar span:nth-child(3){background:#5fdd92}
+.window-bar b{margin-left:10px;font:600 11px var(--mono);color:#a5b2ca}
+.panel-content{padding:18px}
+.status-strip{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:12px}
+.status-strip>div,.kpi-card,.chart-card,.terminal-card{
+  border:1px solid rgba(255,255,255,.08);border-radius:20px;background:rgba(255,255,255,.04)
+}
+.status-strip>div{padding:14px 16px;background:rgba(255,255,255,.03)}
+.status-strip small,.kpi-card small,.chart-title,.chart-title small{display:block;font:700 10px var(--mono);letter-spacing:.08em;color:#94a2be}
+.status-strip strong{display:block;margin-top:6px;color:#fff;font:700 20px var(--mono)}
+.dashboard-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}
+.kpi-card{padding:18px;position:relative;overflow:hidden}
+.kpi-card:before{content:'';position:absolute;inset:auto -20px -20px auto;width:100px;height:100px;border-radius:50%;background:rgba(255,255,255,.03)}
+.kpi-card strong{display:block;font:700 36px var(--mono);color:#fff;margin:8px 0 4px}
+.kpi-card em{display:block;font-style:normal;color:var(--green);font:600 11px var(--mono)}
+.kpi-card.accent{background:linear-gradient(135deg,rgba(140,255,109,.16),rgba(64,233,192,.11))}
+.kpi-card.accent-2{background:linear-gradient(135deg,rgba(123,121,255,.14),rgba(90,167,255,.12))}
+.chart-card.large{grid-column:1/-1;padding:18px;min-height:218px}
+.chart-title{display:flex!important;justify-content:space-between;align-items:center}
+.chart-title small{color:var(--green)}
+.bars{height:126px;display:flex;align-items:flex-end;gap:12px;padding-top:18px;border-bottom:1px solid rgba(255,255,255,.09)}
+.bars i{flex:1;border-radius:10px 10px 0 0;background:linear-gradient(180deg,var(--blue),var(--green))}
+.axis{display:flex;justify-content:space-around;padding-top:8px;color:#7483a1;font:10px var(--mono)}
+.terminal-card{grid-column:1/-1;padding:16px 18px;font:12px var(--mono);color:#c8d4eb}
+.terminal-card p{margin:6px 0}.terminal-card span{color:var(--green)}.terminal-card b{color:#fff}
+.cursor{animation:blink 1.1s infinite}@keyframes blink{50%{opacity:.45}}
+
+.floating-note{
+  position:absolute;padding:16px 18px;border-radius:22px;border:1px solid rgba(255,255,255,.1);
+  background:rgba(17,24,43,.84);backdrop-filter:blur(12px);box-shadow:0 18px 38px rgba(0,0,0,.3);z-index:3;max-width:220px
+}
+.floating-note small{display:block;font:700 10px var(--mono);letter-spacing:.12em;color:#8cbcff;margin-bottom:8px}
+.floating-note strong{display:block;color:#fff;font-size:19px;margin-bottom:5px}
+.floating-note span{display:block;color:var(--muted);font-size:13px;line-height:1.45}
+.note-1{left:-30px;bottom:115px}
+.note-2{right:-24px;top:86px}
+
+.ticker-wrap{border-top:1px solid rgba(255,255,255,.06);border-bottom:1px solid rgba(255,255,255,.06);background:rgba(255,255,255,.025);overflow:hidden}
+.ticker-track{
+  display:flex;gap:34px;white-space:nowrap;padding:16px 0;font:700 11px var(--mono);letter-spacing:.16em;color:#9fb0cf;
+  width:max-content;animation:ticker 36s linear infinite
+}
+.ticker-track span::after{content:'◆';margin-left:34px;color:var(--green);font-size:8px}
+@keyframes ticker{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+
+.section{padding:110px 0}.compact-top{padding-top:90px}
+.section-head{display:grid;grid-template-columns:220px 1fr;gap:34px;align-items:start;margin-bottom:46px}
+.section-head>span{font:700 10px var(--mono);letter-spacing:.12em;color:#7e8eac;padding-top:16px}
+.section h2{font-size:clamp(36px,4.4vw,60px);line-height:1.05;letter-spacing:-.045em;margin:0;color:#fff}
+.section-sub{margin:14px 0 0;color:#9fb0ce;max-width:720px}
+
+.polished-grid,.steps-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+.polished-grid article,.step-card,.feedback-card,.info-tile{
+  border:1px solid rgba(255,255,255,.08);border-radius:28px;background:rgba(255,255,255,.045);box-shadow:var(--shadow)
+}
+.polished-grid article{padding:28px}
+.polished-grid b,.step-card span{display:inline-flex;padding:8px 10px;border-radius:999px;background:rgba(140,255,109,.12);font:700 10px var(--mono);letter-spacing:.1em;color:var(--green)}
+.polished-grid h3,.step-card h3{margin:18px 0 10px;font-size:22px;color:#fff}
+.polished-grid p,.step-card p{margin:0;color:var(--muted);font-size:15px}
+
+.step-card{padding:28px;position:relative;overflow:hidden}
+.step-card:after{content:'';position:absolute;inset:auto -30px -40px auto;width:120px;height:120px;border-radius:50%;background:rgba(90,167,255,.07)}
+
+.tester-banner{
+  margin-top:10px;background:linear-gradient(135deg,rgba(64,233,192,.16),rgba(90,167,255,.16));
+  border-top:1px solid rgba(255,255,255,.08);border-bottom:1px solid rgba(255,255,255,.08)
+}
+.tester-inner{display:flex;justify-content:space-between;align-items:center;gap:36px;padding:58px 0}
+.tester-inner h2{font-size:44px;line-height:1.06;letter-spacing:-.04em;margin:10px 0 12px;color:#fff}
+.tester-inner p{margin:0;max-width:690px;color:#c4d1e5}
+.tester-actions{display:flex;gap:12px;flex-wrap:wrap}
+
+.feedback-layout{display:grid;grid-template-columns:.76fr 1.24fr;gap:56px;align-items:start}
+.feedback-intro{position:sticky;top:110px}
+.feedback-intro h2{margin:16px 0 14px}
+.feedback-intro>p{color:#a4b3cb;max-width:430px}
+.intro-stack{display:grid;gap:14px;margin-top:26px}
+.info-tile{padding:20px;background:rgba(255,255,255,.04)}
+.info-tile small{display:block;font:700 10px var(--mono);letter-spacing:.1em;color:#89c4ff;margin-bottom:8px}
+.info-tile strong{display:block;color:#fff;font-size:18px;margin-bottom:6px}
+.info-tile p{margin:0;color:var(--muted);font-size:14px}
+
+.feedback-card{padding:28px;background:linear-gradient(180deg,rgba(249,251,255,.96),rgba(241,246,255,.94));color:#1a2538}
+.card-head{display:flex;justify-content:space-between;gap:18px;align-items:flex-start;margin-bottom:24px;padding-bottom:20px;border-bottom:1px solid rgba(11,16,32,.08)}
+.form-badge{display:inline-flex;padding:7px 10px;border-radius:999px;background:#ecf5ff;color:#2b5f9e;font:700 10px var(--mono);letter-spacing:.08em}
+.card-head h3{font-size:31px;line-height:1.05;margin:12px 0 8px;color:#0d1628}
+.card-head p{margin:0;color:#5b6780;font-size:14px}
+.card-build{padding:12px 14px;border-radius:16px;background:#f2f6ff;border:1px solid rgba(17,24,43,.08);font:700 11px var(--mono);color:#677591;white-space:nowrap}
+.card-build b{display:block;color:#091422;font-size:15px;margin-top:5px}
+.form-section+.form-section{margin-top:18px;padding-top:18px;border-top:1px solid rgba(17,24,43,.08)}
+.form-row{display:grid;gap:16px;margin-bottom:16px}.form-row.two{grid-template-columns:1fr 1fr}
+.feedback-card label,.rating-field legend{display:block;font-size:12px;font-weight:800;color:#162136}
+.feedback-card em{color:#d63b59;font-style:normal}
+.feedback-card input[type=text],.feedback-card select,.feedback-card textarea{
+  width:100%;border:1px solid #d7dfef;background:#fff;padding:13px 14px;margin-top:8px;font-family:var(--sans);font-size:14px;
+  border-radius:16px;outline:none;color:#162136;transition:.18s ease;box-shadow:inset 0 1px 0 rgba(255,255,255,.7)
+}
+.feedback-card input:focus,.feedback-card select:focus,.feedback-card textarea:focus{border-color:#6db0ff;box-shadow:0 0 0 4px rgba(90,167,255,.18)}
+.feedback-card>label{margin-top:18px}
+.rating-field{border:0;padding:0;margin:4px 0 0}
+.rating{display:flex;gap:10px;flex-wrap:wrap;margin:12px 0 4px}
+.rating input{position:absolute;opacity:0}
+.rating span{
+  display:grid;place-items:center;width:52px;height:46px;border:1px solid #ccd5e7;background:#fff;border-radius:16px;
+  font:700 14px var(--mono);cursor:pointer;transition:.18s ease
+}
+.rating span:hover{transform:translateY(-2px);border-color:#7bb5ff}
+.rating input:checked+span{background:linear-gradient(135deg,var(--green),var(--green-2));border-color:#1d745d;box-shadow:0 12px 24px rgba(64,233,192,.18);color:#0a131d}
+.rating-field small{font-size:11px;color:#66758f}
+.bug-toggle{margin:4px 0 4px}
+.switch-label{display:flex!important;align-items:center;gap:12px;cursor:pointer}.switch-label input{display:none}
+.switch{width:44px;height:24px;border:1px solid #adb8d2;position:relative;background:#e7edf8;border-radius:999px;transition:.2s}
+.switch:after{content:'';position:absolute;width:18px;height:18px;background:#152138;border-radius:50%;left:3px;top:2px;transition:.2s}
+.switch-label input:checked+.switch{background:#dffde8;border-color:#80d899}.switch-label input:checked+.switch:after{left:22px;background:#138054}
+.hidden{display:none}
+.bug-fields{margin-top:12px}
+.consent{margin:24px 0 18px;font-size:12px;color:#5d6a81}.consent label{display:flex;gap:9px;align-items:flex-start}
+.submit-btn{width:100%;justify-content:space-between;padding-inline:20px;font-size:16px}
+.submit-btn b{font-size:18px}
+.form-status{font-size:12px;margin-top:14px;min-height:20px}.form-status.success{color:#237b52}.form-status.error{color:#bc3f58}
+
+footer{border-top:1px solid rgba(255,255,255,.07);background:rgba(8,12,24,.9);padding:28px 0 34px}
+.footer-inner{display:flex;justify-content:space-between;align-items:center;gap:20px}
+.footer-inner p,.footer-inner a{font:11px var(--mono);color:#7f90ad;text-decoration:none}.footer-inner a:hover{color:#cfe2ff}
+
+@media(max-width:1024px){
+  .hero{grid-template-columns:1fr;gap:42px}
+  .hero-visual{min-height:auto}.note-1{left:0;bottom:30px}.note-2{right:0;top:40px}
+  .feedback-layout{grid-template-columns:1fr;gap:34px}.feedback-intro{position:static}
+  .section-head{grid-template-columns:1fr;gap:16px}.section-head>span{padding-top:0}
+}
+
+@media(max-width:900px){
+  .nav nav a{display:none}
+  .hero-mini-grid,.polished-grid,.steps-grid{grid-template-columns:1fr}
+  .tester-inner{flex-direction:column;align-items:flex-start}
+  .status-strip,.dashboard-grid{grid-template-columns:1fr 1fr}
+}
+
+@media(max-width:680px){
+  .shell{width:min(100% - 24px,1180px)}
+  .nav{min-height:72px}
+  .brand strong{font-size:12px}
+  .hero{padding:42px 0 58px}
+  .hero h1{font-size:46px}
+  .lead{font-size:15px}
+  .hero-actions{flex-direction:column}.btn{width:100%}
+  .glass-row{padding:14px;gap:10px}.meta-row{gap:10px 12px}
+  .status-strip,.dashboard-grid,.form-row.two{grid-template-columns:1fr}
+  .floating-note{position:static;max-width:none;margin-top:14px}
+  .panel-content{padding:14px}
+  .section{padding:76px 0}.compact-top{padding-top:72px}
+  .section h2{font-size:34px}.tester-inner h2{font-size:34px}
+  .feedback-card{padding:20px}.card-head{flex-direction:column}
+  .footer-inner{flex-direction:column;align-items:flex-start}.footer-inner p{display:none}
+}
+
+</style>
+</head>
+<body>
+  <div class="bg-orb orb-1"></div>
+  <div class="bg-orb orb-2"></div>
+  <div class="noise"></div>
+
+  <header class="nav-wrap">
+    <div class="nav shell">
+      <a class="brand" href="#top" aria-label="First Jobber home">
+        <span class="brand-mark">FJ</span>
+        <span>
+          <strong>FIRST JOBBER</strong>
+          <small>DATA ANALYST</small>
+        </span>
+      </a>
+
+      <nav>
+        <a href="#about">เกี่ยวกับเกม</a>
+        <a href="#playtest">วิธีทดสอบ</a>
+        <a href="#feedback">Feedback</a>
+        <span class="build-pill">ALPHA PLAYTEST</span>
+      </nav>
+    </div>
+  </header>
+
+  <main id="top">
+    <section class="hero shell">
+      <div class="hero-copy">
+        <div class="eyebrow soft-pill"><span class="live-dot"></span> PUBLIC TEST BUILD OPEN NOW</div>
+        <h1>ก้าวแรกของ Data Analyst<br><span>เริ่มจากข้อมูลหนึ่งกอง สู่งานจริงกองโต</span></h1>
+        <p class="lead">
+          First Jobber: Data Analyst คือเกมจำลองชีวิตการทำงานสายวิเคราะห์ข้อมูล
+          ที่ให้คุณรับโจทย์จากหัวหน้า เคลียร์งาน แก้ปัญหา และเอาตัวรอดจากโลกการทำงานจริง
+          ในรูปแบบ Browser Game ที่เล่นได้ทันที
+        </p>
+
+        <div class="hero-actions">
+          <a class="btn btn-primary" id="playButton" href="/game/">▶ เข้าเล่นเกม</a>
+          <a class="btn btn-secondary" href="#feedback">✦ ส่ง Feedback</a>
+        </div>
+
+        <div class="meta-row glass-row">
+          <span><b>PLATFORM</b> Browser</span>
+          <span><b>BUILD</b> <span id="buildText">Alpha 0.1</span></span>
+          <span><b>STATUS</b> <i>Open Testing</i></span>
+          <span><b>FOCUS</b> UX / Bugs / Balance</span>
+        </div>
+
+        <div class="hero-mini-grid">
+          <article class="mini-card">
+            <small>PLAYTEST GOAL</small>
+            <strong>เก็บ Feedback</strong>
+            <p>ตรวจ UX, ความสนุก, ความยาก และ bug ที่ผู้เล่นเจอจริง</p>
+          </article>
+          <article class="mini-card">
+            <small>BEST EXPERIENCE</small>
+            <strong>Desktop Browser</strong>
+            <p>แนะนำ Chrome หรือ Edge เพื่อประสบการณ์เล่นที่นิ่งที่สุด</p>
+          </article>
+        </div>
+      </div>
+
+      <div class="hero-visual">
+        <div class="showcase-card primary-panel">
+          <div class="window-bar">
+            <span></span><span></span><span></span>
+            <b>first_jobber_dashboard</b>
+          </div>
+          <div class="panel-content">
+            <div class="status-strip">
+              <div><small>PLAYER MODE</small><strong>Junior Analyst</strong></div>
+              <div><small>DAY</small><strong>07</strong></div>
+              <div><small>INBOX</small><strong>14</strong></div>
+            </div>
+
+            <div class="dashboard-grid">
+              <div class="kpi-card accent">
+                <small>ACTIVE TASKS</small>
+                <strong>07</strong>
+                <em>2 urgent</em>
+              </div>
+              <div class="kpi-card">
+                <small>DATA QUALITY</small>
+                <strong>83%</strong>
+                <em>12 issues</em>
+              </div>
+              <div class="kpi-card">
+                <small>ENERGY</small>
+                <strong>64%</strong>
+                <em>coffee helps</em>
+              </div>
+              <div class="kpi-card accent-2">
+                <small>TEAM TRUST</small>
+                <strong>78%</strong>
+                <em>stable</em>
+              </div>
+
+              <div class="chart-card large">
+                <div class="chart-title"><span>WORKLOAD / 7 DAYS</span><small>LIVE</small></div>
+                <div class="bars"><i style="height:28%"></i><i style="height:48%"></i><i style="height:37%"></i><i style="height:68%"></i><i style="height:57%"></i><i style="height:88%"></i><i style="height:72%"></i></div>
+                <div class="axis"><span>M</span><span>T</span><span>W</span><span>T</span><span>F</span><span>S</span><span>S</span></div>
+              </div>
+
+              <div class="terminal-card">
+                <p><span>&gt;</span> loading analyst_profile...</p>
+                <p><span>&gt;</span> manager_request = <b>"ด่วนมาก"</b></p>
+                <p><span>&gt;</span> pending_mail = <b>14 unread</b></p>
+                <p class="cursor"><span>&gt;</span> good luck, first_jobber_</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="floating-note note-1">
+          <small>NOW TESTING</small>
+          <strong>Gameplay Flow</strong>
+          <span>ตั้งแต่เข้าเล่นจนส่ง Feedback</span>
+        </div>
+
+        <div class="floating-note note-2">
+          <small>IMPORTANT</small>
+          <strong>ใส่ User ID</strong>
+          <span>เพื่อให้ทีมตรวจสอบปัญหาได้ตรง session</span>
+        </div>
+      </div>
+    </section>
+
+    <section class="ticker-wrap">
+      <div class="ticker-track">
+        <span>SQL</span>
+        <span>EXCEL</span>
+        <span>DASHBOARD</span>
+        <span>DEADLINE</span>
+        <span>EMAIL</span>
+        <span>MEETING</span>
+        <span>COFFEE</span>
+        <span>PIVOT</span>
+        <span>DATA CLEANING</span>
+        <span>STAKEHOLDER</span>
+        <span>SQL</span>
+        <span>EXCEL</span>
+        <span>DASHBOARD</span>
+        <span>DEADLINE</span>
+        <span>EMAIL</span>
+        <span>MEETING</span>
+      </div>
+    </section>
+
+    <section id="about" class="section shell">
+      <div class="section-head">
+        <span>01 / ABOUT THE GAME</span>
+        <div>
+          <h2>ชีวิต Data Analyst แบบที่ไม่ได้มีแค่กราฟสวย ๆ</h2>
+          <p class="section-sub">เกมนี้เน้นอารมณ์ของ “งานจริงวันแรก” ทั้งเรื่องข้อมูล ปัญหา deadline และการตัดสินใจในงาน</p>
+        </div>
+      </div>
+
+      <div class="feature-grid polished-grid">
+        <article>
+          <b>01</b>
+          <h3>โจทย์จากคนทำงานจริง</h3>
+          <p>คุณไม่ได้รับ requirement ที่สมบูรณ์แบบเสมอไป ต้องอ่านสถานการณ์ ตีความ และเลือกว่าจะจัดการอะไรก่อน</p>
+        </article>
+        <article>
+          <b>02</b>
+          <h3>ทำงานกับข้อมูลที่ไม่สมบูรณ์</h3>
+          <p>เจอข้อมูลขาด ข้อมูลซ้ำ หรือโจทย์เปลี่ยนกลางทางได้เหมือนโลกจริง และคุณต้องหาทางไปต่อ</p>
+        </article>
+        <article>
+          <b>03</b>
+          <h3>ตัดสินใจแล้วมีผล</h3>
+          <p>เลือกผิดหรือเลือกช้าอาจกระทบเวลา พลังงาน ความไว้ใจของทีม และรูปแบบการเดินเรื่องของตัวละคร</p>
+        </article>
+      </div>
+    </section>
+
+    <section id="playtest" class="section shell compact-top">
+      <div class="section-head">
+        <span>02 / PLAYTEST FLOW</span>
+        <div>
+          <h2>วิธีเข้าร่วมทดสอบแบบง่าย ๆ</h2>
+          <p class="section-sub">เราออกแบบให้ผู้เล่นเข้าใจง่าย เข้าเล่นได้เร็ว และส่ง Feedback กลับมาได้ทันที</p>
+        </div>
+      </div>
+
+      <div class="steps-grid">
+        <article class="step-card">
+          <span>STEP 01</span>
+          <h3>กดเข้าเล่นเกม</h3>
+          <p>คลิกปุ่ม <b>เข้าเล่นเกม</b> จากหน้านี้ แล้วเริ่มทดลองเล่นผ่าน Browser ได้เลย</p>
+        </article>
+        <article class="step-card">
+          <span>STEP 02</span>
+          <h3>จดจำ User ID</h3>
+          <p>หากเกมแสดง User ID ของคุณไว้ ให้นำมาใส่ในฟอร์ม เพื่อให้เราตรวจสอบ session ได้ตรงจุด</p>
+        </article>
+        <article class="step-card">
+          <span>STEP 03</span>
+          <h3>ส่ง Feedback กลับมา</h3>
+          <p>บอกเราทั้งสิ่งที่ชอบ สิ่งที่งง ความยาก จุดไม่สมดุล หรือ bug ที่พบระหว่างเล่น</p>
+        </article>
+      </div>
+    </section>
+
+    <section class="tester-banner">
+      <div class="shell tester-inner">
+        <div>
+          <span class="eyebrow">WE NEED TESTERS</span>
+          <h2>เจออะไรแปลก ๆ บอกเราได้เลย</h2>
+          <p>Bug, ความยาก, UX, เนื้อเรื่อง หรือความรู้สึกหลังเล่น — ทุก Feedback ช่วยให้เกมดีขึ้น และช่วยกำหนดทิศทางเวอร์ชันถัดไป</p>
+        </div>
+        <div class="tester-actions">
+          <a href="#feedback" class="btn btn-light">เขียน Feedback ↓</a>
+          <a href="/game/" id="playButtonSecondary" class="btn btn-dark">ลองเล่นตอนนี้</a>
+        </div>
+      </div>
+    </section>
+
+    <section id="feedback" class="section shell feedback-layout">
+      <div class="feedback-intro">
+        <span class="section-label">03 / FEEDBACK</span>
+        <h2>ช่วยเราปรับเกม<br>ให้ดีขึ้นกว่าเดิม</h2>
+        <p>ยิ่ง Feedback ชัด ยิ่งช่วยให้ทีมแก้ได้เร็ว โดยเฉพาะถ้าระบุ User ID, สิ่งที่ทำก่อนเกิดปัญหา และความรู้สึกหลังเล่น</p>
+
+        <div class="intro-stack">
+          <div class="info-tile">
+            <small>TIP</small>
+            <strong>ถ้าเจอ bug</strong>
+            <p>บอกว่าเกิดตอนทำอะไร หน้าไหน และถ้าจำได้ให้ระบุลำดับการกดก่อนเกิดปัญหา</p>
+          </div>
+          <div class="info-tile">
+            <small>PRIVACY</small>
+            <strong>เราเก็บข้อมูลอะไร</strong>
+            <p>ใช้เฉพาะข้อมูลจากฟอร์ม เวอร์ชันเกม หน้าเว็บ และ browser เพื่อวิเคราะห์ช่วง playtest เท่านั้น</p>
+          </div>
+        </div>
+      </div>
+
+      <form id="feedbackForm" class="feedback-card">
+        <div class="card-head">
+          <div>
+            <span class="form-badge">PLAYTEST REPORT</span>
+            <h3>ส่ง Feedback</h3>
+            <p>กรอกสั้น ๆ ก็ได้ แต่ยิ่งละเอียดก็ยิ่งช่วยเราได้มาก</p>
+          </div>
+          <div class="card-build">BUILD <b id="buildTextCard">Alpha 0.1</b></div>
+        </div>
+
+        <div class="form-section">
+          <div class="form-row two">
+            <label>In-game User ID <em>*</em><input id="userId" name="user_id" type="text" required placeholder="เช่น FJ-001248" autocomplete="off"></label>
+            <label>ชื่อเล่น<input name="nickname" type="text" placeholder="ไม่บังคับ"></label>
+          </div>
+
+          <div class="form-row two">
+            <label>อุปกรณ์<select name="device"><option value="PC">PC / Notebook</option><option value="Mobile">Mobile</option><option value="Tablet">Tablet</option><option value="Other">อื่น ๆ</option></select></label>
+            <label>Browser<select name="browser" id="browserSelect"><option>Chrome</option><option>Edge</option><option>Safari</option><option>Firefox</option><option>Other</option></select></label>
+          </div>
+        </div>
+
+        <div class="form-section">
+          <fieldset class="rating-field">
+            <legend>ความสนุกโดยรวม <em>*</em></legend>
+            <div class="rating" id="ratingGroup">
+              <label><input type="radio" name="rating" value="1" required><span>1</span></label>
+              <label><input type="radio" name="rating" value="2"><span>2</span></label>
+              <label><input type="radio" name="rating" value="3"><span>3</span></label>
+              <label><input type="radio" name="rating" value="4"><span>4</span></label>
+              <label><input type="radio" name="rating" value="5"><span>5</span></label>
+            </div>
+            <small>1 = ยังไม่สนุก · 5 = สนุกมาก</small>
+          </fieldset>
+        </div>
+
+        <div class="form-section">
+          <label>ส่วนที่ชอบที่สุด<textarea name="liked" rows="3" placeholder="อะไรทำให้คุณอยากเล่นต่อ?"></textarea></label>
+          <label>สิ่งที่ควรปรับปรุง<textarea name="improve" rows="3" placeholder="ตรงไหนงง ยาก ช้า หรือไม่สนุก?"></textarea></label>
+        </div>
+
+        <div class="form-section">
+          <div class="bug-toggle">
+            <label class="switch-label"><input id="bugFound" name="bug_found" type="checkbox"><span class="switch"></span><b>ฉันเจอ Bug</b></label>
+          </div>
+          <div id="bugFields" class="bug-fields hidden">
+            <label>รายละเอียด Bug<textarea name="bug_detail" rows="4" placeholder="เกิดอะไรขึ้น? ก่อนเกิด Bug คุณทำอะไรอยู่?"></textarea></label>
+          </div>
+        </div>
+
+        <div class="form-section">
+          <label>Feedback เพิ่มเติม<textarea name="comment" rows="4" placeholder="อยากให้เพิ่มอะไร หรือมีอะไรอยากบอกทีมพัฒนา"></textarea></label>
+        </div>
+
+        <div class="consent"><label><input type="checkbox" required> <span>ฉันยินยอมให้ใช้ Feedback นี้เพื่อการพัฒนาและทดสอบเกม</span></label></div>
+        <button class="btn btn-primary submit-btn" type="submit"><span>ส่ง Feedback</span><b>→</b></button>
+        <div id="formStatus" class="form-status" role="status"></div>
+      </form>
+    </section>
+  </main>
+
+  <footer>
+    <div class="shell footer-inner">
+      <div class="brand">
+        <span class="brand-mark">FJ</span>
+        <span><strong>FIRST JOBBER</strong><small>DATA ANALYST</small></span>
+      </div>
+      <p>Browser Playtest · Built for testing · Feedback driven development</p>
+      <a href="#top">BACK TO TOP ↑</a>
+    </div>
+  </footer>
+
+  <script src="app.js"></script>
+</body>
+</html>
